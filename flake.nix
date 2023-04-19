@@ -22,16 +22,19 @@
         # system.
 
         # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
-        packages.default = pkgs.hello;
+        # packages.default = pkgs.hello;
 
         devenv.shells.default = {
-          name = "my-project";
+          name = "jusion";
 
           # https://devenv.sh/reference/options/
-          packages = [ config.packages.default ];
+	  # packages = []
+	  languages = {
+	    javascript.enable = true;
+	  };
 
           enterShell = ''
-            hello
+            echo "Welcome to Jusion!"
           '';
         };
 
