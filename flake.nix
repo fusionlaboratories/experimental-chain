@@ -28,10 +28,11 @@
           name = "jusion";
 
           # https://devenv.sh/reference/options/
-	  # packages = []
-	  languages = {
-	    javascript.enable = true;
-	  };
+          # packages = []
+          languages = {
+            javascript.enable = true;
+            haskell.enable = true;
+          };
 
           enterShell = ''
             echo "Welcome to Jusion!"
