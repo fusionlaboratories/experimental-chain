@@ -1,4 +1,6 @@
-module Main where
+module Main (main) where
+
+import Lang (main)
 
 -- A Simple Example of L1 Oracle
 
@@ -57,10 +59,3 @@ let input = make_array(18) in
    , Deposit address amount
 
 -}
-
-
-
-
-
-main :: IO ()
-main = putStrLn "Hello, Haskell!"
