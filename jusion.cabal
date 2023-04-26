@@ -21,16 +21,32 @@ maintainer:         jakub.zalewski@qredo.com
 -- category:
 -- extra-source-files: CHANGELOG.md
 
-executable jusion
-    main-is:          Main.hs
+library
+    exposed-modules:          Jusion
 
     -- Modules included in this executable, other than Main.
-    other-modules:    Lang
+    -- other-modules:    Lang
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    base ^>=4.16.4.0
-                    , bound
-                    , deriving-compat
-    hs-source-dirs:   app
+    --                , bound
+    --                , deriving-compat
+    hs-source-dirs:   src
     default-language: Haskell2010
+
+-- test suite
+test-suite test
+    default-language:
+        Haskell2010
+    type:
+        exitcode-stdio-1.0
+    hs-source-dirs:
+        tests
+    main-is:
+        test.hs
+    build-depends:
+        base ^>=4.16.4.0
+        , tasty
+        , tasty-hunit
+        , jusion
