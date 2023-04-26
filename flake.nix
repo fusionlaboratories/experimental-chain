@@ -32,13 +32,13 @@
           languages = {
             javascript.enable = true;
             haskell.enable = true;
+            rust.enable = true;
           };
 
           enterShell = ''
             echo "Welcome to Jusion!"
           '';
         };
-
       };
       flake = {
         # The usual flake attributes can be defined here, including system-
