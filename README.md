@@ -23,5 +23,10 @@ Assuming that Qredo is running as DApp on top of Fusion, then there are at least
 - [ ] MASM Handling in Haskell
   - [ ] Maybe add golden testing for MASM generation,
 - [ ] Basic ZK DSL
+  - [X] Some simple field for testing,
+    - Added F17 for testing.
+  - [X] Import Midens field for testing.
+    - Added 2^64 - 2^32 + 1,
+    - we could potentially import the type directly from Rust, albeit that is slightly unsafe.
 - [ ] Basic interface for an L1 Oracle
 - [ ] What is sufficient to uniquely determine a transaction?  Block Height and Transaction Position?  Or Transaction Hash?  Or the triple?
