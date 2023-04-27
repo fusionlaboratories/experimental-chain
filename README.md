@@ -22,6 +22,8 @@ Assuming that Qredo is running as DApp on top of Fusion, then there are at least
   - <https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md#importing-a-cargolock-file>.
 - [ ] MASM Handling in Haskell
   - [ ] Maybe add golden testing for MASM generation,
+- [ ] Miden Handling in Haskell
+  - [-] Add Data Structure for Miden Input
 - [ ] Basic ZK DSL
   - [X] Some simple field for testing,
     - Added F17 for testing.
