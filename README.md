@@ -15,8 +15,13 @@ Assuming that Qredo is running as DApp on top of Fusion, then there are at least
 
 ## TODO
 
-- [ ] Switch to using nix flakes.  There is a simple `flake.nix`, but I am not using it yet.
-  - [ ] direnv integration.  Need to install and set up direnv.
+- [X] Switch to using nix flakes.  There is a simple `flake.nix`, but I am not using it yet.
+  - [X] direnv integration.  Need to install and set up direnv.
+- [ ] Build Miden in Nix Flake.  Currently, we are setting up the rust toolchain using `devenv`, however we need to add `miden` as well.
+  - leaving this for now, as this is more menial task (with a candidate solution in starkify),
+  - <https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md#importing-a-cargolock-file>.
+- [ ] MASM Handling in Haskell
+  - [ ] Maybe add golden testing for MASM generation,
 - [ ] Basic ZK DSL
 - [ ] Basic interface for an L1 Oracle
 - [ ] What is sufficient to uniquely determine a transaction?  Block Height and Transaction Position?  Or Transaction Hash?  Or the triple?
