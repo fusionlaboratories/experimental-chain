@@ -17,7 +17,7 @@ import Data.FiniteField.PrimeField qualified as PF
 type Field = PF.PrimeField 18446744069414584321
 
 instance Aeson.ToJSON Field where
-    toJSON = Aeson.toJSON . PF.toInteger
+    toJSON = Aeson.toJSON . show
 
 -- Miden Input File
 -- https://github.com/0xPolygonMiden/examples/blob/main/examples/advice_provider.inputs
@@ -39,7 +39,7 @@ inputFile :: InputFile
 inputFile = InputFile{operand_stack = [], advice_stack = Nothing}
 
 -- >>> encodeInputFile (operandStack [1, 2, 3])
--- "{\"operand_stack\":[1,2,3]}"
+-- "{\"operand_stack\":[\"1\",\"2\",\"3\"]}"
 operandStack :: [Field] -> InputFile
 operandStack ops = inputFile{operand_stack = ops}
 
