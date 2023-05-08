@@ -1,12 +1,9 @@
 {
-  description = "Description for the project";
+  description = "Proof of Concept for Jusion";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     devenv.url = "github:cachix/devenv";
-    nix2container.url = "github:nlewo/nix2container";
-    nix2container.inputs.nixpkgs.follows = "nixpkgs";
-    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -14,7 +11,9 @@
       imports = [
         inputs.devenv.flakeModule
       ];
-      systems = [ "x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+
+      # systems = [ "x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      systems = [ "aarch64-darwin" ];
 
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         # Per-system attributes can be defined here. The self' and inputs'
@@ -34,10 +33,6 @@
             haskell.enable = true;
             rust.enable = true;
           };
-
-          enterShell = ''
-            echo "Welcome to Jusion!"
-          '';
         };
       };
       flake = {
