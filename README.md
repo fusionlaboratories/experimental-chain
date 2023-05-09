@@ -15,20 +15,34 @@ Assuming that Qredo is running as DApp on top of Fusion, then there are at least
 
 ## TODO
 
-- [X] Switch to using nix flakes.  There is a simple `flake.nix`, but I am not using it yet.
-  - [X] direnv integration.  Need to install and set up direnv.
-- [ ] Build Miden in Nix Flake.  Currently, we are setting up the rust toolchain using `devenv`, however we need to add `miden` as well.
-  - leaving this for now, as this is more menial task (with a candidate solution in starkify),
-  - <https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md#importing-a-cargolock-file>.
-- [ ] MASM Handling in Haskell
-  - [ ] Maybe add golden testing for MASM generation,
+- [ ] ZK DSL
+  - [ ] Basic AST based on MASM
+  - [ ] Consider using Ed's Bound for that DSL
+- [ ] MASM Generation
+  - [ ] Reuse MASM code from Starkify
+  - [ ] Consider adding MASM parser
+- [ ] Basic infrastructure for golden testing
+  - [ ] Detect tests automatically, so I can avoid all the compilation overhead
+    There are some various utilities in [tasty-golden/Various Utilities](https://hackage.haskell.org/package/tasty-golden-2.3.5/docs/Test-Tasty-Golden.html#g:3), which should be helpful in detecting all the test cases.
 - [ ] Miden Handling in Haskell
   - [-] Add Data Structure for Miden Input
-- [ ] Basic ZK DSL
-  - [X] Some simple field for testing,
-    - Added F17 for testing.
-  - [X] Import Midens field for testing.
-    - Added 2^64 - 2^32 + 1,
-    - we could potentially import the type directly from Rust, albeit that is slightly unsafe.
+  - [X] Fix miden to emit exit codes properly.
+  - [ ] Write a custom driver for the miden vm (the miden CLI is pretty barebone)
+  - [ ] Consider importing Miden VM Rust bindings to Haskell...
 - [ ] Basic interface for an L1 Oracle
 - [ ] What is sufficient to uniquely determine a transaction?  Block Height and Transaction Position?  Or Transaction Hash?  Or the triple?
+
+## Archived
+
+Here are tasks that have been completed.
+
+- [X] Some simple field for testing,
+  - Added F17 for testing.
+- [X] Import Midens field for testing.
+  - Added 2^64 - 2^32 + 1,
+  - we could potentially import the type directly from Rust, albeit that is slightly unsafe.
+- [X] Switch to using nix flakes.  There is a simple `flake.nix`, but I am not using it yet.
+  - [X] direnv integration.  Need to install and set up direnv.
+- [X] Build Miden in Nix Flake.  Currently, we are setting up the rust toolchain using `devenv`, however we need to add `miden` as well.
+  - leaving this for now, as this is more menial task (with a candidate solution in starkify),
+  - <https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md#importing-a-cargolock-file>.
