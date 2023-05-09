@@ -4,4 +4,4 @@
 .devenv
 # Cabal
 dist-newstyle
-cabal.project.local
+cabal.project.local*
