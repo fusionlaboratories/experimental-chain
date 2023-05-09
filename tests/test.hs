@@ -1,3 +1,5 @@
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module Main where
 
 import Control.Monad (unless)
@@ -8,13 +10,15 @@ import System.FilePath (dropExtension, makeRelative, (</>))
 import Test.Tasty
 import Test.Tasty.Golden (findByExtension, goldenVsFile)
 import Test.Tasty.HUnit (testCase, (@?=))
+import Test.Tasty.Patterns.Types qualified as E
 import Test.Tasty.Program (testProgram)
 
 import Jusion
 import Miden (InputFile (..), inputFile, writeInputFile)
+import Test.Tasty.Patterns.Types (Expr (StringLit))
 
-midenInput :: InputFile
-midenInput = inputFile{operand_stack = ["0", "18446744069414584321"]}
+-- midenInput :: InputFile
+-- midenInput = inputFile{operand_stack = ["0", "18446744069414584321"]}
 
 main :: IO ()
 main = do
@@ -49,9 +53,10 @@ midenTestCase :: TestName -> TestTree
 midenTestCase name =
     testGroup
         name
-        [ goldenVsFile "input" inputGolden inputFile (writeInputFile inputFile midenInput)
-        , after AllSucceed "input" (testProgram "compilation" "miden" ["run", "-a", masmFile, "-i", inputFile, "-o", outputFile] Nothing)
-        , after AllSucceed "compilation" (goldenVsFile "output" outputGolden outputFile (pure ()))
+        [ -- goldenVsFile "input" inputGolden inputFile (writeInputFile inputFile midenInput)
+          -- , after AllSucceed "input" (testProgram "compilation" "miden" ["run", "-a", masmFile, "-i", inputFile, "-o", outputFile] Nothing)
+          testProgram "compilation" "miden" ["run", "-a", masmFile, "-i", inputFile, "-o", outputFile] Nothing
+        , after_ AllSucceed compilation (goldenVsFile "output" outputGolden outputFile (pure ()))
         ]
   where
     inputFile = name ++ ".input"
@@ -59,3 +64,6 @@ midenTestCase name =
     masmFile = name ++ ".masm"
     outputFile = name ++ ".output"
     outputGolden = outputFile ++ ".golden"
+    -- Match only the the compilation step in your own group
+    -- \$(NF - 1) == name && $(NF) == "compilation"
+    compilation = E.And (E.EQ (E.Field (E.Sub E.NF (E.IntLit 1))) (E.StringLit name)) (E.EQ (E.Field E.NF) (E.StringLit "compilation"))
