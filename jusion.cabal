@@ -44,6 +44,7 @@ library
 test-suite test
     default-language:
         Haskell2010
+    ghc-options:  -threaded
     type:
         exitcode-stdio-1.0
     hs-source-dirs:
@@ -60,24 +61,5 @@ test-suite test
         , bytestring
         , process
         , tasty-program
-
--- test suite for running miden
-test-suite miden
-    default-language:
-        Haskell2010
-    ghc-options:  -threaded
-    type:
-        exitcode-stdio-1.0
-    hs-source-dirs:
-        tests
-    main-is:
-        miden-test.hs
-    build-depends:
-        base ^>=4.16.4.0
-        , jusion
-        , tasty
-        , tasty-golden
-        , aeson
-        , bytestring
-        , process
-        , tasty-program
+        , directory
+        , filepath
