@@ -1,0 +1,6 @@
+packages: .
+
+source-repository-package
+    type: git
+    location: https://bitbucket.org/jstolarek/tasty-program.git
+    tag: d992caa272cd8c184335a6f889645c477759858d
