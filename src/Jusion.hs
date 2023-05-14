@@ -1,10 +1,6 @@
-{-# LANGUAGE DataKinds #-}
-module Jusion (F17) where
+module Jusion where
 
-import Data.FiniteField.PrimeField
 
--- A simple prime field
-type F17 = PrimeField 17
 
 
 -- going for a super simple implementation of the AST
