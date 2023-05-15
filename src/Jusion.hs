@@ -4,9 +4,9 @@
 
 module Jusion where
 
+import Data.Hashable (Hashable)
 import Data.Map.Strict qualified as Map
 
-import Data.Hashable (Hashable)
 import GHC.Generics (Generic)
 
 import Jusion.Hash
@@ -27,6 +27,7 @@ data Wallet = Wallet
     , balance :: Amount
     , transactions :: [Transaction]
     }
+    deriving (Eq, Show)
 
 -- NOTE: Does not fully model the origin
 data Block = Block
@@ -34,7 +35,7 @@ data Block = Block
     , height :: Integer
     , transactions :: [Transaction]
     }
-    deriving (Eq, Generic)
+    deriving (Eq, Show, Generic)
 
 instance Hashable Block
 
@@ -44,24 +45,30 @@ data Transaction = Transaction
     , amount :: Integer
     , block :: Block
     }
-    deriving (Eq, Generic)
+    deriving (Eq, Show, Generic)
 
 instance Hashable Transaction
 
-newtype Ledger = Ledger {byAddress :: Map.Map Address Amount}
+newtype Ledger = Ledger
+    { byAddress :: Map.Map Address Amount
+    }
+    deriving (Eq, Show)
+
 data Blockchain = Blockchain
     { byHeight :: Map.Map Height Block
     , byHash :: Map.Map (Hash Block) Block
     }
+    deriving (Eq, Show)
 
 data TransactionLog = TransactionLog
     { byHeight :: Map.Map Height Transaction
     , byHash :: Map.Map (Hash Transaction) Transaction
     }
+    deriving (Eq, Show)
 
 data Network = Network
     { ledger :: Ledger
     , blockchain :: Blockchain
     , transactionLog :: TransactionLog
     }
-
+    deriving (Eq, Show)
