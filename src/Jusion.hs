@@ -1,38 +1,67 @@
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module Jusion where
 
--- Here we assume that there are only two L1 chains available
---   - Some other L1 chain, and
---   - Jusion L1 chain.
---
--- Example program in Kachina style
---
---   let b : Block = query L1.getBlockByHeight {height}
---   assert b.hash == {hash}
---
--- Actually, the above program will get simplified to a single public oracle
--- query, or rather maybe this should be called a _fact_?
---
---   L1.Block {height} {hash}
+import Data.Map.Strict qualified as Map
 
--- start
---   let b = query L1.getBlockByHeight {height}
---   assert b.hash == {hash}
+import Data.Hashable (Hashable)
+import GHC.Generics (Generic)
 
--- desugar data structs
---   let (L1.Block b_height b_hash) = L1.getBlockByHeight {height}
---   assert b_hash == {hash}
+import Jusion.Hash
 
--- desugar queries
---   let (L1.Block b_height b_hash) = fact L1.Block {height} {?}
---   assert b_hash == {hash}
+-- TODO: Implement a simple model of Jusion
 
--- pull fact out of let
---   let b_height = {height}
---   let b_hash = {?}
---   fact L1.Block b_height b_hash
---   assert b_hash == {hash}
+-- L1 Oracle, which contains
+-- A Map of Blocks
 
--- unify b_hash and {hash}
---   let b_height = {height}
---   let b_hash = {hash}
---   fact L1.Block b_height b_hash
+type Address = Int
+type Amount = Int
+type Height = Int
+
+-- Wallet
+
+data Wallet = Wallet
+    { address :: Address
+    , balance :: Amount
+    , transactions :: [Transaction]
+    }
+
+-- NOTE: Does not fully model the origin
+data Block = Block
+    { parent :: Hash Block
+    , height :: Integer
+    , transactions :: [Transaction]
+    }
+    deriving (Eq, Generic)
+
+instance Hashable Block
+
+data Transaction = Transaction
+    { from :: Address
+    , to :: Address
+    , amount :: Integer
+    , block :: Block
+    }
+    deriving (Eq, Generic)
+
+instance Hashable Transaction
+
+newtype Ledger = Ledger {byAddress :: Map.Map Address Amount}
+data Blockchain = Blockchain
+    { byHeight :: Map.Map Height Block
+    , byHash :: Map.Map (Hash Block) Block
+    }
+
+data TransactionLog = TransactionLog
+    { byHeight :: Map.Map Height Transaction
+    , byHash :: Map.Map (Hash Transaction) Transaction
+    }
+
+data Network = Network
+    { ledger :: Ledger
+    , blockchain :: Blockchain
+    , transactionLog :: TransactionLog
+    }
+
