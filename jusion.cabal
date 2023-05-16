@@ -33,6 +33,7 @@ library
                             , Jusion.TransactionLog
                             , Jusion.Network
                             , Miden
+                            , Data.Field
                             , Data.Field.F17
                             , Data.Field.Goldilocks
 

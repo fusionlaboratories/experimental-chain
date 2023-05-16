@@ -32,10 +32,3 @@ type Transaction = Transaction.Transaction
 type Blockchain = Blockchain.Blockchain Block
 type TransactionLog = TransactionLog.TransactionLog Transaction
 type Network = Network.Network Block Transaction 
-
--- TODO: Add some more interesting boundaries
-class ToField a b where
-    toField :: a -> b
-
-instance Enum a => ToField a Field where
-    toField = fromInteger . toInteger . fromEnum
