@@ -13,6 +13,7 @@ import Jusion.Hash
 import Jusion.Common
 import Jusion.Wallet qualified as Wallet
 import Jusion.Block qualified as Block
+import Jusion.Transaction qualified as Transaction
 
 -- TODO: Implement a simple model of Jusion
 
@@ -26,15 +27,8 @@ type Wallet = Wallet.Wallet Transaction
 -- NOTE: Does not fully model the genesis
 type Block = Block.Block Transaction
 
-data Transaction = Transaction
-    { from :: Address
-    , to :: Address
-    , amount :: Integer
-    , block :: Block
-    }
-    deriving (Eq, Show, Generic)
-
-instance Hashable Transaction
+-- Transaction type
+type Transaction = Transaction.Transaction
 
 newtype Ledger = Ledger
     { byAddress :: Map.Map Address Amount
