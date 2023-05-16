@@ -1,10 +1,15 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE DataKinds #-}
 
 module Jusion where
 
 import Data.Hashable (Hashable)
 import Data.Map.Strict qualified as Map
+import Data.FiniteField.PrimeField qualified as PF
 
 import GHC.Generics (Generic)
 
@@ -18,22 +23,19 @@ import Jusion.Blockchain qualified as Blockchain
 import Jusion.TransactionLog qualified as TransactionLog
 import Jusion.Network qualified as Network
 
+import Data.Field.Goldilocks
+
 -- TODO: Implement a simple model of Jusion
-
--- L1 Oracle, which contains
--- A Map of Blocks
-
--- Wallet
 type Wallet = Wallet.Wallet Transaction
-
--- NOTE: Does not fully model the genesis
 type Block = Block.Block Transaction
-
--- Transaction type
 type Transaction = Transaction.Transaction
-
 type Blockchain = Blockchain.Blockchain Block
-
 type TransactionLog = TransactionLog.TransactionLog Transaction
-
 type Network = Network.Network Block Transaction 
+
+-- TODO: Add some more interesting boundaries
+class ToField a b where
+    toField :: a -> b
+
+instance Enum a => ToField a Field where
+    toField = fromInteger . toInteger . fromEnum
