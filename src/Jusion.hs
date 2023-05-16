@@ -9,17 +9,17 @@ import Data.Map.Strict qualified as Map
 
 import GHC.Generics (Generic)
 
-import Jusion.Hash
-import Jusion.Common
-import Jusion.Wallet qualified as Wallet
 import Jusion.Block qualified as Block
+import Jusion.Common
+import Jusion.Hash
 import Jusion.Transaction qualified as Transaction
+import Jusion.Wallet qualified as Wallet
+import Jusion.Ledger
 
 -- TODO: Implement a simple model of Jusion
 
 -- L1 Oracle, which contains
 -- A Map of Blocks
-
 
 -- Wallet
 type Wallet = Wallet.Wallet Transaction
@@ -30,26 +30,21 @@ type Block = Block.Block Transaction
 -- Transaction type
 type Transaction = Transaction.Transaction
 
-newtype Ledger = Ledger
-    { byAddress :: Map.Map Address Amount
-    }
-    deriving (Eq, Show)
 
 data Blockchain = Blockchain
-    { byHeight :: Map.Map Height Block
-    , byHash :: Map.Map (Hash Block) Block
+    { _byHeight :: Map.Map Height Block
+    , _byHash :: Map.Map (Hash Block) Block
     }
     deriving (Eq, Show)
 
-data TransactionLog = TransactionLog
-    { byHeight :: Map.Map Height Transaction
-    , byHash :: Map.Map (Hash Transaction) Transaction
+newtype TransactionLog = TransactionLog
+    { _byHash :: Map.Map (Hash Transaction) Transaction
     }
     deriving (Eq, Show)
 
 data Network = Network
-    { ledger :: Ledger
-    , blockchain :: Blockchain
-    , transactionLog :: TransactionLog
+    { _ledger :: Ledger
+    , _blockchain :: Blockchain
+    , _transactionLog :: TransactionLog
     }
     deriving (Eq, Show)
