@@ -11,6 +11,8 @@ import GHC.Generics (Generic)
 
 import Jusion.Hash
 import Jusion.Common
+import Jusion.Wallet qualified as Wallet
+import Jusion.Wallet hiding (Wallet)
 
 -- TODO: Implement a simple model of Jusion
 
@@ -19,13 +21,7 @@ import Jusion.Common
 
 
 -- Wallet
-
-data Wallet = Wallet
-    { address :: Address
-    , balance :: Amount
-    , transactions :: [Transaction]
-    }
-    deriving (Eq, Show)
+type Wallet = Wallet.Wallet Transaction
 
 -- NOTE: Does not fully model the origin
 data Block = Block
