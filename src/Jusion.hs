@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 
@@ -17,7 +16,7 @@ import Jusion.Wallet qualified as Wallet
 import Jusion.Ledger
 import Jusion.Blockchain qualified as Blockchain
 import Jusion.TransactionLog qualified as TransactionLog
-import qualified Jusion.TransactionLog as TransactionLog
+import Jusion.Network qualified as Network
 
 -- TODO: Implement a simple model of Jusion
 
@@ -37,9 +36,4 @@ type Blockchain = Blockchain.Blockchain Block
 
 type TransactionLog = TransactionLog.TransactionLog Transaction
 
-data Network = Network
-    { _ledger :: Ledger
-    , _blockchain :: Blockchain
-    , _transactionLog :: TransactionLog
-    }
-    deriving (Eq, Show)
+type Network = Network.Network Block Transaction 
