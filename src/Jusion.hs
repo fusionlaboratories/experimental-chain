@@ -12,7 +12,7 @@ import GHC.Generics (Generic)
 import Jusion.Hash
 import Jusion.Common
 import Jusion.Wallet qualified as Wallet
-import Jusion.Wallet hiding (Wallet)
+import Jusion.Block qualified as Block
 
 -- TODO: Implement a simple model of Jusion
 
@@ -23,15 +23,8 @@ import Jusion.Wallet hiding (Wallet)
 -- Wallet
 type Wallet = Wallet.Wallet Transaction
 
--- NOTE: Does not fully model the origin
-data Block = Block
-    { parent :: Hash Block
-    , height :: Integer
-    , transactions :: [Transaction]
-    }
-    deriving (Eq, Show, Generic)
-
-instance Hashable Block
+-- NOTE: Does not fully model the genesis
+type Block = Block.Block Transaction
 
 data Transaction = Transaction
     { from :: Address
