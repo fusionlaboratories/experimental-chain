@@ -10,15 +10,13 @@ import Data.Map.Strict qualified as Map
 import GHC.Generics (Generic)
 
 import Jusion.Hash
+import Jusion.Common
 
 -- TODO: Implement a simple model of Jusion
 
 -- L1 Oracle, which contains
 -- A Map of Blocks
 
-type Address = Int
-type Amount = Int
-type Height = Int
 
 -- Wallet
 

@@ -23,6 +23,7 @@ maintainer:         jakub.zalewski@qredo.com
 
 library
     exposed-modules:          Jusion
+                            , Jusion.Common
                             , Jusion.Hash
                             , Jusion.Wallet
                             , Miden
