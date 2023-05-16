@@ -29,6 +29,7 @@ library
                             , Jusion.Wallet
                             , Jusion.Transaction
                             , Jusion.Ledger
+                            , Jusion.Blockchain
                             , Miden
                             , Field
 
