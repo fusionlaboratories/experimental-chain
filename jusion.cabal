@@ -30,6 +30,7 @@ library
                             , Jusion.Transaction
                             , Jusion.Ledger
                             , Jusion.Blockchain
+                            , Jusion.TransactionLog
                             , Miden
                             , Field
 

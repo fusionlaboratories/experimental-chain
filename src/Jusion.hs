@@ -16,6 +16,8 @@ import Jusion.Transaction qualified as Transaction
 import Jusion.Wallet qualified as Wallet
 import Jusion.Ledger
 import Jusion.Blockchain qualified as Blockchain
+import Jusion.TransactionLog qualified as TransactionLog
+import qualified Jusion.TransactionLog as TransactionLog
 
 -- TODO: Implement a simple model of Jusion
 
@@ -33,10 +35,7 @@ type Transaction = Transaction.Transaction
 
 type Blockchain = Blockchain.Blockchain Block
 
-newtype TransactionLog = TransactionLog
-    { _byHash :: Map.Map (Hash Transaction) Transaction
-    }
-    deriving (Eq, Show)
+type TransactionLog = TransactionLog.TransactionLog Transaction
 
 data Network = Network
     { _ledger :: Ledger
