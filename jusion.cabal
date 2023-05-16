@@ -33,7 +33,9 @@ library
                             , Jusion.TransactionLog
                             , Jusion.Network
                             , Miden
-                            , Field
+                            , Data.Field.F17
+                            , Data.Field.Goldilocks
+
 
     -- Modules included in this executable, other than Main.
     -- other-modules:    Lang

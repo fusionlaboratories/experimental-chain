@@ -13,7 +13,7 @@ import Test.Tasty.HUnit (testCase, (@?=))
 import Test.Tasty.Patterns.Types qualified as E
 import Test.Tasty.Program (testProgram)
 
-import Field (F17)
+import Data.Field.F17 qualified as F17
 import Miden (InputFile (..), inputFile, writeInputFile)
 import Test.Tasty.Patterns.Types (Expr (StringLit))
 
@@ -46,7 +46,7 @@ tests :: TestTree
 tests =
     testGroup
         "finite fields"
-        [ testCase "f17 wraps around" $ (0 :: F17) @?= (17 :: F17)
+        [ testCase "f17 wraps around" $ (0 :: F17.Field) @?= (17 :: F17.Field)
         ]
 
 midenTestCase :: TestName -> TestTree

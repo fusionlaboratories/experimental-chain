@@ -1,8 +1,8 @@
 {-# LANGUAGE DataKinds #-}
 
-module Field (F17) where
+module Data.Field.F17 (Field) where
 
 import Data.FiniteField.PrimeField (PrimeField)
 
 -- A simple prime field
-type F17 = PrimeField 17
+type Field = PrimeField 17
