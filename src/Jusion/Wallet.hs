@@ -1,4 +1,8 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Jusion.Wallet where
+
+import Control.Lens.TH
 
 type Address = Int
 type Amount = Int
@@ -10,3 +14,5 @@ data Wallet tx = Wallet
     , _transactions :: [tx]
     }
     deriving (Eq, Show)
+
+makeLenses ''Wallet
