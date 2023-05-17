@@ -31,7 +31,7 @@ common language
 library
     import: language
     exposed-modules:
-        Jusion,
+        -- Jusion (Blockchain Network Model)
         Jusion.Block,
         Jusion.Common,
         Jusion.Hash,
@@ -41,8 +41,11 @@ library
         Jusion.Blockchain,
         Jusion.TransactionLog,
         Jusion.Network,
+        -- Nightfall (Language)
+        Nightfall,
+        -- Miden (Compiler Handling)
         Miden,
-        -- MASM
+        -- MASM (MASM Language)
         MASM,
         MASM.Callgraph,
         MASM.Interpreter,
