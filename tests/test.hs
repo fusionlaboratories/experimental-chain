@@ -12,8 +12,8 @@ import Test.Tasty.Patterns.Types qualified as E
 import Test.Tasty.Program (testProgram)
 
 import Data.Field.F17 qualified as F17
-import Miden (InputFile (..), inputFile, writeInputFile)
-import Test.Tasty.Patterns.Types (Expr (StringLit))
+-- import Miden (InputFile (..), inputFile, writeInputFile)
+-- import Test.Tasty.Patterns.Types (Expr (StringLit))
 
 -- midenInput :: InputFile
 -- midenInput = inputFile{operand_stack = ["0", "18446744069414584321"]}
@@ -58,7 +58,7 @@ midenTestCase name =
         ]
   where
     inputFile = name ++ ".input"
-    inputGolden = inputFile ++ ".golden"
+    -- inputGolden = inputFile ++ ".golden"
     masmFile = name ++ ".masm"
     outputFile = name ++ ".output"
     outputGolden = outputFile ++ ".golden"
