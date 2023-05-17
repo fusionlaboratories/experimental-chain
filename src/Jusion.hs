@@ -1,4 +1,3 @@
-{-# LANGUAGE GADTSyntax #-}
 module Jusion where
 
 import Data.Function

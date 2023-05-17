@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric, TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell #-}
 module Jusion.Block where
 
 import Control.Lens.TH
@@ -12,7 +12,7 @@ import Jusion.Hash
 
 data Block tx = Block
     { _parent :: Hash (Block tx)
-    , _height :: Integer
+    , _height :: Height
     , _transactions :: [tx]
     }
     deriving (Eq, Show, Generic)

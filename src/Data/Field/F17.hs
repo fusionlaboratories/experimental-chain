@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds #-}
-
 module Data.Field.F17 (Field(..)) where
 
 import Data.FiniteField.PrimeField (PrimeField)
