@@ -6,12 +6,21 @@
         {
             "label": "Cabal Build",
             "type": "shell",
-            "command": "cabal build"
+            "command": "cabal build",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "label": "Cabal Test",
             "type": "shell",
-            "command": "cabal test"
+            "command": "cabal test",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build"
+            }
         }
     ]
 }
