@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 module Data.Field.Goldilocks (Field(..)) where
 
+import Data.Aeson qualified as Aeson
 import Data.Field
 import Data.FiniteField.PrimeField (PrimeField)
 
@@ -12,3 +13,7 @@ newtype Field = Field { unField :: PrimeField 18446744069414584321 }
 
 instance Enum a => ToField a Field where
     toField = fromInteger . toInteger . fromEnum
+
+-- Encoding Field Elements as JSON Strings
+instance Aeson.ToJSON Field where
+    toJSON = Aeson.toJSON . show

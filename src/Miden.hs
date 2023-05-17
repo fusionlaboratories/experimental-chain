@@ -3,25 +3,12 @@
 module Miden where
 
 import Data.Aeson qualified as Aeson
-import GHC.Generics
-
-import Data.FiniteField qualified as PF
-import Data.FiniteField.PrimeField qualified as PF
-
+import Data.Aeson.Encoding (encodingToLazyByteString)
 import Data.ByteString.Lazy qualified as L
 
--- required by Miden Process Handling
-import System.Process
-import System.Exit
-import Data.Aeson.Encoding (encodingToLazyByteString)
+import GHC.Generics
 
--- The Order of Miden's underlying field is
--- >>> 2 ^ 64 - 2 ^ 32 + 1
--- 18446744069414584321
-type Field = PF.PrimeField 18446744069414584321
-
-instance Aeson.ToJSON Field where
-    toJSON = Aeson.toJSON . show
+import Data.Field.Goldilocks
 
 -- Miden Input File
 -- https://github.com/0xPolygonMiden/examples/blob/main/examples/advice_provider.inputs
