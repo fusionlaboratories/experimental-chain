@@ -1,4 +1,4 @@
-{-# LANGUAGE ImportQualifiedPost, TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell #-}
 module Jusion.TransactionLog where
 
 import Data.Map.Strict qualified as Map

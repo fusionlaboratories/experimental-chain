@@ -21,21 +21,36 @@ maintainer:         jakub.zalewski@qredo.com
 -- category:
 -- extra-source-files: CHANGELOG.md
 
+common language
+    default-language: GHC2021
+    default-extensions:
+        DisambiguateRecordFields,
+        TypeFamilies
+
+
 library
-    exposed-modules:          Jusion
-                            , Jusion.Block
-                            , Jusion.Common
-                            , Jusion.Hash
-                            , Jusion.Wallet
-                            , Jusion.Transaction
-                            , Jusion.Ledger
-                            , Jusion.Blockchain
-                            , Jusion.TransactionLog
-                            , Jusion.Network
-                            , Miden
-                            , Data.Field
-                            , Data.Field.F17
-                            , Data.Field.Goldilocks
+    import: language
+    exposed-modules:
+        Jusion,
+        Jusion.Block,
+        Jusion.Common,
+        Jusion.Hash,
+        Jusion.Wallet,
+        Jusion.Transaction,
+        Jusion.Ledger,
+        Jusion.Blockchain,
+        Jusion.TransactionLog,
+        Jusion.Network,
+        Miden,
+        -- MASM
+        MASM,
+        MASM.Callgraph,
+        MASM.Interpreter,
+        MASM.Miden,
+        MASM.Types,
+        Data.Field,
+        Data.Field.F17,
+        Data.Field.Goldilocks
 
 
     -- Modules included in this executable, other than Main.
@@ -43,41 +58,42 @@ library
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base ^>=4.16.4.0
-    --                , bound
-    --                , deriving-compat
-                      , finite-field
-                      , aeson
-                      , process
-                      , bytestring
-                      , containers
-                      , hashable
-                      , data-default
-                      , lens
-
-    hs-source-dirs:   src
-    default-language: Haskell2010
+    build-depends:  base ^>=4.16.4.0,
+                    finite-field,
+                    aeson,
+                    process,
+                    bytestring,
+                    containers,
+                    hashable,
+                    data-default,
+                    lens,
+                    directory,
+                    filepath,
+                    temporary,
+                    mtl,
+                    dlist,
+                    text
+    hs-source-dirs: src
+    ghc-options:    -Wall
 
 -- test suite
 test-suite test
-    default-language:
-        Haskell2010
-    ghc-options:  -threaded
+    import:         language
     type:
         exitcode-stdio-1.0
     hs-source-dirs:
         tests
     main-is:
         test.hs
-    build-depends:
-        base ^>=4.16.4.0
-        , tasty
-        , tasty-hunit
-        , jusion
-        , tasty-golden
-        , aeson
-        , bytestring
-        , process
-        , tasty-program
-        , directory
-        , filepath
+    build-depends:  base ^>=4.16.4.0,
+                    tasty,
+                    tasty-hunit,
+                    jusion,
+                    tasty-golden,
+                    aeson,
+                    bytestring,
+                    process,
+                    tasty-program,
+                    directory,
+                    filepath
+    ghc-options:    -Wall -threaded

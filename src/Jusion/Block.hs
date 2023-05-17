@@ -5,7 +5,7 @@ import Control.Lens.TH
 
 import Data.Hashable
 
-import GHC.Generics
+import GHC.Generics ( Generic )
 
 import Jusion.Common
 import Jusion.Hash
