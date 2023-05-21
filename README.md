@@ -19,17 +19,17 @@ Assuming that Qredo is running as DApp on top of Fusion, then there are at least
   - [ ] Basic AST based on MASM
   - [ ] Consider using Ed's Bound for that DSL
 - [ ] MASM Generation
-  - [ ] Reuse MASM code from Starkify
+  - [X] Reuse MASM code from Starkify
   - [ ] Consider adding MASM parser
 - [ ] Basic infrastructure for golden testing
-  - [ ] Detect tests automatically, so I can avoid all the compilation overhead
+  - [X] Detect tests automatically, so I can avoid all the compilation overhead
     There are some various utilities in [tasty-golden/Various Utilities](https://hackage.haskell.org/package/tasty-golden-2.3.5/docs/Test-Tasty-Golden.html#g:3), which should be helpful in detecting all the test cases.
 - [ ] Miden Handling in Haskell
   - [-] Add Data Structure for Miden Input
   - [X] Fix miden to emit exit codes properly.
   - [ ] Write a custom driver for the miden vm (the miden CLI is pretty barebone)
   - [ ] Consider importing Miden VM Rust bindings to Haskell...
-- [ ] Basic interface for an L1 Oracle
+- [X] Basic interface for an L1 Oracle
 - [ ] What is sufficient to uniquely determine a transaction?  Block Height and Transaction Position?  Or Transaction Hash?  Or the triple?
 
 ## Archived
