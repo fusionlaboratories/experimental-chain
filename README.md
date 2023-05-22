@@ -1,5 +1,17 @@
 # Jusion Chain Proof-of-Concept
 
+## Verifiable Oracle
+
+How does verifiable Oracle observe transactions on the L1 chain?  Similarly to a Kachina Transition Funciton, but the Oracle performs the following Public Oracle Queries:
+
+- verify that a particular block exists
+  - for particular L1 (1 field element, ignored because we assume ETH),
+  - with particular block height (1 field element), and
+  - with particular hash (1 field element, 32 bytes).
+- verify that a particular transaction exists within that block
+  - transaction position (1 field element?),
+  - transaction hash (1 field element).
+
 ## Stratified System
 
 Assuming that Qredo is running as DApp on top of Fusion, then there are at least two levels:
