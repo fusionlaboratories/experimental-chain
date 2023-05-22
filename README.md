@@ -11,6 +11,9 @@ How does verifiable Oracle observe transactions on the L1 chain?  Similarly to a
 - verify that a particular transaction exists within that block
   - transaction position (1 field element?),
   - transaction hash (1 field element).
+- perform the transaction on L2
+  - destination address of the transaction (1 field element)
+  - amount of wrapped tokens (1 field element)
 
 ## Stratified System
 

@@ -1,0 +1,38 @@
+# Fetch the L1 Oracle for a Chain
+proc.fetch_chain
+end
+
+# Fetch the right L1 Block
+proc.fetch_block
+drop
+end
+
+# Fetch the right Transaction
+proc.fetch_transaction
+drop
+drop
+end
+
+# Transfer the right amount of funds
+proc.transfer_funds
+drop
+drop
+end
+
+# Fetch 
+proc.record_transaction
+end
+
+# The Oracle Program
+begin
+
+# L1 Operations
+exec.fetch_chain
+exec.fetch_block
+exec.fetch_transaction
+
+# L2 Operations
+exec.transfer_funds
+exec.record_transaction
+
+end
