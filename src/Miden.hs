@@ -5,6 +5,7 @@ module Miden where
 import Data.Aeson qualified as Aeson
 import Data.Aeson.Encoding (encodingToLazyByteString)
 import Data.ByteString.Lazy qualified as L
+import Data.Default
 
 import GHC.Generics
 
@@ -21,21 +22,22 @@ data InputFile = InputFile
 
 instance Aeson.ToJSON InputFile
 
+instance Default InputFile
+
+
 encodeInputFile :: InputFile -> Aeson.Encoding
 encodeInputFile = Aeson.genericToEncoding Aeson.defaultOptions{Aeson.omitNothingFields = True}
 
 writeInputFile :: FilePath -> InputFile -> IO ()
 writeInputFile path = L.writeFile path . encodingToLazyByteString . encodeInputFile
 
--- >>> encodeInputFile inputFile
+-- >>> encodeInputFile default
 -- "{\"operand_stack\":[]}"
-inputFile :: InputFile
-inputFile = InputFile{operand_stack = [], advice_stack = Nothing}
 
 -- >>> encodeInputFile (operandStack [1, 2, 3])
 -- "{\"operand_stack\":[\"1\",\"2\",\"3\"]}"
 operandStack :: [Field] -> InputFile
-operandStack ops = inputFile{operand_stack = map show ops}
+operandStack ops = def{operand_stack = map show ops}
 
 -- data MidenOut = MidenOut
 --   { stack :: [String],

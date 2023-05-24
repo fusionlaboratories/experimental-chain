@@ -75,7 +75,8 @@ library
                     temporary,
                     mtl,
                     dlist,
-                    text
+                    text,
+                    wide-word
     hs-source-dirs: src
     ghc-options:    -Wall
 
@@ -89,14 +90,16 @@ test-suite test
     main-is:
         test.hs
     build-depends:  base ^>=4.16.4.0,
+                    jusion,
                     tasty,
                     tasty-hunit,
-                    jusion,
                     tasty-golden,
                     aeson,
                     bytestring,
                     process,
                     tasty-program,
                     directory,
-                    filepath
+                    filepath,
+                    wide-word,
+                    data-default
     ghc-options:    -Wall -threaded
