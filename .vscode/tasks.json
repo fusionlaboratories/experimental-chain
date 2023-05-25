@@ -19,7 +19,8 @@
             "command": "cabal test",
             "problemMatcher": [],
             "group": {
-                "kind": "build"
+                "kind": "test",
+                "isDefault": true
             }
         }
     ]
