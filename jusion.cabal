@@ -94,6 +94,7 @@ test-suite test
                     tasty,
                     tasty-hunit,
                     tasty-golden,
+                    tasty-quickcheck,
                     aeson,
                     bytestring,
                     process,
@@ -101,5 +102,6 @@ test-suite test
                     directory,
                     filepath,
                     wide-word,
-                    data-default
+                    data-default,
+                    mtl
     ghc-options:    -Wall -threaded
