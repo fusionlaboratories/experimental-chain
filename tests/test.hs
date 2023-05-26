@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-orphans #-}
 {-# LANGUAGE RecordWildCards #-}
 
 module Main where
@@ -25,7 +26,7 @@ import GHC.Generics
 import Control.Monad.State.Strict
 import Control.Monad.Writer.Strict
 
-import Miden (InputFile (..), writeInputFile)
+import Miden -- (InputFile (..), writeInputFile)
 
 -- import Test.Tasty.Patterns.Types (Expr (StringLit))
 
