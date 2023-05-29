@@ -1,5 +1,15 @@
 # Jusion Chain Proof-of-Concept
 
+## Development Shell
+
+Unfortunately, Nix Flakes are still an experimental feature, therefore they need to be explicitly enabled.
+
+- [Flakes - NixOS Wiki](https://nixos.wiki/wiki/Flakes)
+
+```sh
+nix develop --impure
+```
+
 ## Verifiable Oracle
 
 How does verifiable Oracle observe transactions on the L1 chain?  Similarly to a Kachina Transition Funciton, but the Oracle performs the following Public Oracle Queries:
