@@ -64,6 +64,10 @@
             self'.packages.haskell-language-server
             pkgs.cabal-install
             pkgs.zlib
+
+            # Rust
+            self'.packages.rust
+            pkgs.rust-analyzer 
           ];
 
           # Extra languages
