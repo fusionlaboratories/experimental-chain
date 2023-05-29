@@ -63,11 +63,13 @@
             self'.packages.ghc
             self'.packages.haskell-language-server
             pkgs.cabal-install
+            pkgs.ghcid
             pkgs.zlib
 
             # Rust
             self'.packages.rust
-            pkgs.rust-analyzer 
+            pkgs.rust-analyzer
+            pkgs.cargo-watch
           ];
 
           # Extra languages
