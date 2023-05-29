@@ -5,3 +5,5 @@
 # Cabal
 dist-newstyle
 cabal.project.local*
+# Cargo
+target

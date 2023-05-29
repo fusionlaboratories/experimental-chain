@@ -1,0 +1,4 @@
+[workspace]
+members = ["jusion-rust"]
+default-members = ["jusion-rust"]
+
