@@ -48,8 +48,8 @@
         };
 
         # Haskell Toolchain
-        packages.ghc = pkgs.ghc;
-        packages.haskell-language-server = pkgs.haskell-language-server;
+        packages.ghc = pkgs.haskell.packages.ghc94.ghc;
+        packages.haskell-language-server = pkgs.haskell.packages.ghc94.haskell-language-server;
 
         devenv.shells.default = {
           name = "jusion";
