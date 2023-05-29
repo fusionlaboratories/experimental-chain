@@ -1,0 +1,16 @@
+cradle:
+  multi:
+    # Ignore paths for non-Haskell components
+    - path: "./target"
+      config:
+        cradle:
+          none:
+    - path: "./jusion-rust"
+      config:
+        cradle:
+          none:
+    # Treat the whole directory as Haskell component
+    - path: "./"
+      config:
+        cradle:
+          cabal:

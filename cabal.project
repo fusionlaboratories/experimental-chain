@@ -1,4 +1,4 @@
-packages: **/*.cabal
+packages: jusion-haskell/jusion-haskell.cabal
 
 source-repository-package
     type: git
