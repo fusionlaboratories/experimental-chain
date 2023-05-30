@@ -9,7 +9,9 @@ priority and components.
   - [X] in Haskell,
   - [ ] in Rust.
 - [ ] Encode Transcript into a vector of Field Elements
-  - [ ] Fix Haskell implementation to use Montgomery representation for `Word64`,
+  - [ ] Fix Haskell implementation to use Montgomery representation for `Word64`
+  <https://docs.rs/winter-math/latest/src/winter_math/field/f64/mod.rs.html#58>
+  <https://docs.rs/winter-math/latest/src/winter_math/field/f64/mod.rs.html#651>
   - [ ] in Rust,
   - [ ] Compare Haskell and Rust implementation using property based testing.
 - [ ] Portal Transition Function
