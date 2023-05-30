@@ -1,14 +1,17 @@
 use core::convert::From;
+use serde::{Deserialize, Serialize};
 use std::{u32, u128, mem::size_of};
-use winter_math::fields::f64::BaseElement;
 use std::convert::TryInto;
+use winter_math::fields::f64::BaseElement;
 
-// TODO: pick from existing libs?
+// TODO: pick a U256 from existing libs?
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 struct U256 {
     high: u128,
     low: u128,
 }
 
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Transcript {
     l1: u32,
     block_height: u32,
@@ -21,7 +24,7 @@ pub struct Transcript {
 
 const TRANSCRIPT_SIZE: usize = ( 4 * size_of::<u32>() + 3 * size_of::<U256>() ) / size_of::<u32>();
 
-pub fn serialize(t: Transcript) -> [BaseElement; TRANSCRIPT_SIZE] {
+pub fn to_elements(t: Transcript) -> [BaseElement; TRANSCRIPT_SIZE] {
     fn push32(bytes: &mut Vec<BaseElement>, u: u32) {
         bytes.push(From::from(u));
     }
@@ -53,18 +56,27 @@ pub fn serialize(t: Transcript) -> [BaseElement; TRANSCRIPT_SIZE] {
 mod tests {
     use super::*;
 
+    const T1: Transcript = Transcript {
+        l1: 1,
+        block_height: 1,
+        block_hash: U256 { high: 1, low: 0 },
+        tx_slot: 1,
+        tx_hash: U256 { high: 0, low: 1 },
+        dest_address: U256 { high: 1, low: 1 },
+        amount: 1,
+    };
+
     #[test]
-    fn serializeTranscript() {
-        let t = Transcript {
-            l1: 1,
-            block_height: 1,
-            block_hash: U256 { high: 1, low: 0 },
-            tx_slot: 1,
-            tx_hash: U256 { high: 0, low: 1 },
-            dest_address: U256 { high: 1, low: 1 },
-            amount: 1,
-        };
-        let bs = serialize(t);
+    fn elements() {
+        let bs = to_elements(T1);
         assert_eq!(TRANSCRIPT_SIZE, bs.len());
+    }
+
+    #[test]
+    fn json() -> serde_json::Result<()>{
+        let bs = serde_json::to_vec(&T1)?;
+        let t = serde_json::from_slice(bs.as_slice())?;
+        assert_eq!(T1, t);
+        return Ok(());
     }
 }
