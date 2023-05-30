@@ -4,5 +4,10 @@
     "grunt.autoDetect": "off",
     "jake.autoDetect": "off",
     "gulp.autoDetect": "off",
-    "npm.autoDetect": "off"
+    "npm.autoDetect": "off",
+    // Use fourmolu as default formatter
+    "haskell.formattingProvider": "fourmolu",
+    // Try to use tools from the devShell
+    "rust-analyzer.server.path": "rust-analyzer",
+    "haskell.serverExecutablePath": "haskell-language-server-wrapper"
   }
