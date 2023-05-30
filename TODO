@@ -1,0 +1,108 @@
+# TODO
+
+List of tasks for Jusion implementation in Rust/Haskell.  Roughly ordered by
+priority and components.
+
+## ETH -> Jusion Portal (a.k.a Verifiable Oracle)
+
+- [ ] Definition of Transcript (based on the [ethers](https://docs.rs/ethers/latest/ethers/) library):
+  - [X] in Haskell,
+  - [ ] in Rust.
+- [ ] Encode Transcript into a vector of Field Elements
+  - [ ] Fix Haskell implementation to use Montgomery representation for `Word64`,
+  - [ ] in Rust,
+  - [ ] Compare Haskell and Rust implementation using property based testing.
+- [ ] Portal Transition Function
+  - [X] Hand written MASM file without transaction semantics,
+  - [ ] ZK DSL version of hand written MASM file witout transition semantics.
+  - [ ] Dump MASM program hash into a file
+- [ ] Generate Miden Input based on Transcript
+  - [ ] Dump Transcript encoded in JSON
+
+## Prover and Verifier Workflow
+
+This can be predominantly in Rust.
+
+- [ ] Load Transcript from JSON File
+- [ ] Encode it as Field Elements/MidenInput
+- [ ] Proving
+  - [ ] Load MASM program from a file
+  - [ ] Generate proof and dump it to a file
+- [ ] Verification
+  - [ ] Load MASM program hash from a file
+  - [ ] Load proof from a file
+- [ ] Add Rust API to prover and verifier, potentially wrapping Miden API.
+
+## Jusion Client
+
+This will most likely be in Rust.
+
+Official Rust client for Substrate:
+<https://github.com/paritytech/subxt>
+
+- [ ] Send Transaction claiming L1 funds on Substrate containing
+  - [ ] Transcript, and
+  - [ ] ZKP.
+
+## Jusion Node
+
+This will most likely be in Rust.
+
+<https://github.com/substrate-developer-hub/awesome-substrate/blob/master/README.md#templates>
+This probably means that we need to build a custom pellet that can verify ZKP.
+Or at least a Smart Contract that can mint new tokens.
+
+- [ ] Process Claim Transactions
+  - [ ] Verify ZKP,
+  - [ ] Verify Transcript with L1 Oracle,
+  - [ ] Mint some new wrapped tokens,
+  - [ ] Send them to the target address, and finally
+  - [ ] Record the transaction to prevent double spend.
+
+## Jusion ETH L1 Oracle
+
+- [ ] Build an index of Blocks on L1 Chain (ETH),
+- [ ] Detect new Blocks appearing on L1,
+- [ ] Figure out how to get previous blocks from L1.
+- [ ] Load the index from storage,
+- [ ] What is sufficient to uniquely determine a transaction?  Block Height and Transaction Position?  Or Transaction Hash?  Or the triple?
+
+## ZK DSL
+
+- [ ] Consider using Ed's Bound for the DSL
+- [ ] Field Representation in Haskell
+  - [ ] Use Word64 as a representation instead of Integer
+  - [ ] Plug in Rust Representation of Field
+
+## Miden Driver for Haskell
+
+- [ ] Add support for `MidenOutput` format,
+- [ ] Consider importing Miden VM Rust bindings into Haskell...
+
+## Miden CLI
+
+- [ ] Open a PR request for `miden` CLI emitting exit codes properly.
+
+## Archived
+
+Here are tasks that have been completed.
+
+- [X] Fix miden to emit exit codes properly.
+- [X] Basic infrastructure for golden testing
+- [X] Detect tests automatically, so I can avoid all the compilation overhead.
+There are some various utilities in [tasty-golden/Various
+Utilities](https://hackage.haskell.org/package/tasty-golden-2.3.5/docs/Test-Tasty-Golden.html#g:3),
+which should be helpful in detecting all the test cases.
+- [X] Reuse MASM code from Starkify
+- [X] Basic interface for an L1 Oracle
+- [X] Some simple field for testing,
+  - Added F17 for testing.
+- [X] Import Midens field for testing.
+  - Added 2^64 - 2^32 + 1,
+  - we could potentially import the type directly from Rust, albeit that is slightly unsafe.
+- [X] Switch to using nix flakes.  There is a simple `flake.nix`, but I am not using it yet.
+  - [X] direnv integration.  Need to install and set up direnv.
+- [X] Build Miden in Nix Flake.  Currently, we are setting up the rust toolchain using `devenv`, however we need to add `miden` as well.
+  - leaving this for now, as this is more menial task (with a candidate solution in starkify),
+  - <https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md#importing-a-cargolock-file>.
+  
