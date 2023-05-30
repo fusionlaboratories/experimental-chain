@@ -41,6 +41,8 @@ library
         Jusion.Blockchain,
         Jusion.TransactionLog,
         Jusion.Network,
+        -- Portal
+        Portal,
         -- Nightfall (Language)
         Nightfall,
         -- Miden (Compiler Handling)
