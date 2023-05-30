@@ -5,3 +5,21 @@ version = 3
 [[package]]
 name = "jusion-rust"
 version = "0.1.0"
+dependencies = [
+ "winter-math",
+]
+
+[[package]]
+name = "winter-math"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "42fc18260fd2d07f5d88b88c93d216ce83eaf5e3dc7ade7d35d4db2e92d8b913"
+dependencies = [
+ "winter-utils",
+]
+
+[[package]]
+name = "winter-utils"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b903fda6a50cce2aa5a172a9269aca0f09b25df20afb1faa427db76d40779671"
