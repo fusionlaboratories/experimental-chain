@@ -41,6 +41,7 @@ library
         Jusion.Blockchain,
         Jusion.TransactionLog,
         Jusion.Network,
+        Jusion.Oracle,
         -- Portal
         Portal,
         -- Nightfall (Language)
@@ -83,7 +84,7 @@ library
     ghc-options:    -Wall
 
 -- test suite
-test-suite test
+test-suite jusion
     import:         language
     type:
         exitcode-stdio-1.0
