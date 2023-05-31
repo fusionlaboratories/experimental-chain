@@ -1,8 +1,12 @@
 use core::convert::From;
+use miden_assembly::{Assembler, AssemblyError};
+use miden_core::{Kernel, Program, ProgramInfo, StackInputs, StackOutputs };
+use miden_prover::{Digest, ExecutionProof, MemAdviceProvider, prove};
+use miden_verifier::{VerificationError, verify};
 use serde::{Deserialize, Serialize};
-use std::convert::TryInto;
-use std::{mem::size_of, u128, u32};
+use std::{convert::TryInto, fs, mem::size_of, path::Path, u128, u32};
 use winter_math::fields::f64::BaseElement;
+use winter_utils::{Deserializable, Serializable};
 
 // TODO: pick a U256 from existing libs?
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -57,9 +61,88 @@ pub fn to_elements(t: Transcript) -> [BaseElement; TRANSCRIPT_SIZE] {
     return bytes.to_vec().try_into().unwrap();
 }
 
+// Inlined from miden as it's not exported
+// https://github.com/0xPolygonMiden/miden-vm/blob/4195475d75ab2d586bdb01d1ff3ea2cd626eaf7b/miden/src/cli/data.rs#LL260C1-L264C2
+#[derive(Deserialize, Serialize, Debug)]
+pub struct OutputFile {
+    pub stack: Vec<String>,
+    pub overflow_addrs: Vec<String>,
+}
+
+impl OutputFile {
+    /// Returns a new [OutputFile] from the specified outputs vectors
+    pub fn new(stack_outputs: &StackOutputs) -> Self {
+        Self {
+            stack: stack_outputs.stack().iter().map(|&v| v.to_string()).collect::<Vec<String>>(),
+            overflow_addrs: stack_outputs
+                .overflow_addrs()
+                .iter()
+                .map(|&v| v.to_string())
+                .collect::<Vec<String>>(),
+        }
+    }
+
+    /// Converts outputs vectors for stack and overflow addresses to [StackOutputs].
+    pub fn stack_outputs(&self) -> StackOutputs {
+        let stack = self.stack.iter().map(|v| v.parse::<u64>().unwrap()).collect::<Vec<u64>>();
+
+        let overflow_addrs = self
+            .overflow_addrs
+            .iter()
+            .map(|v| v.parse::<u64>().unwrap())
+            .collect::<Vec<u64>>();
+
+        StackOutputs::new(stack, overflow_addrs)
+    }
+}
+
+pub fn transcript(t: Transcript) -> StackInputs {
+    return StackInputs::new(to_elements(t).to_vec());
+}
+
+pub fn read_program<P: AsRef<Path>> (path: P) -> Result<Program, AssemblyError> {
+    let data = fs::read_to_string(path).expect("Unable to read file");
+    let assembler = Assembler::default();
+    return assembler.compile(data);
+}
+
+pub fn run_prover (t: Transcript, program: Program) -> (Digest, StackOutputs, ExecutionProof) {
+    let (outputs, proof) = prove(&program, transcript(t), MemAdviceProvider::default(), Default::default()).unwrap();
+    return (program.hash(), outputs, proof);
+}
+
+pub fn run_verifier(t: Transcript, program_info: ProgramInfo, outputs: StackOutputs, proof: ExecutionProof) -> Result<u32, VerificationError> {
+    return verify(program_info, transcript(t), outputs, proof);
+}
+
+pub fn run_prover_files<P: AsRef<Path>> (t: Transcript, program_path: &P, hash_path: &P, outputs_path: &P, proof_path: &P) {
+    let program = read_program(program_path).unwrap();
+    let (hash, outputs, proof) = run_prover(t, program);
+
+    fs::write(hash_path, hash.to_bytes()).unwrap();
+    let outputs_bytes = serde_json::to_vec_pretty(&OutputFile::new(&outputs)).unwrap();
+    fs::write(outputs_path, outputs_bytes).unwrap();
+    fs::write(proof_path, proof.to_bytes()).unwrap();
+}
+
+pub fn run_verifier_files<P: AsRef<Path>> (t: Transcript, hash_path: &P, outputs_path: &P, proof_path: &P) -> Result<u32, VerificationError> {
+    let hash_bytes = fs::read(hash_path).unwrap();
+    let outputs_bytes = fs::read(outputs_path).unwrap();
+    let proof_bytes = fs::read(proof_path).unwrap();
+
+    let hash = Digest::read_from_bytes(&hash_bytes).unwrap();
+    let out_file: OutputFile = serde_json::from_slice(&outputs_bytes).unwrap();
+    let outputs = out_file.stack_outputs();
+    let proof = ExecutionProof::from_bytes(&proof_bytes).unwrap();
+
+    let info = ProgramInfo::new(hash, Kernel::default());
+    return run_verifier(t, info, outputs, proof);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::{Path, PathBuf};
 
     const T1: Transcript = Transcript {
         l1: 1,
@@ -77,10 +160,24 @@ mod tests {
         assert_eq!(TRANSCRIPT_SIZE, bs.len());
     }
 
+
+    #[test]
+    fn roundtrip() {
+        let tmp = std::env::temp_dir();
+        let hash_path    = tmp.join("hash");
+        let outputs_path = tmp.join("outputs");
+        let proof_path   = tmp.join("proof");
+        println!("{:?}", tmp);
+
+        let input = PathBuf::new().join("../jusion-haskell/tests/test.masm");
+        run_prover_files(T1, &input, &hash_path, &outputs_path, &proof_path);
+        run_verifier_files(T1, &hash_path, &outputs_path, &proof_path).unwrap();
+    }
+
     #[test]
     fn json() -> serde_json::Result<()> {
         let bs = serde_json::to_vec(&T1)?;
-        let t = serde_json::from_slice(bs.as_slice())?;
+        let t = serde_json::from_slice(&bs)?;
         assert_eq!(T1, t);
         return Ok(());
     }
