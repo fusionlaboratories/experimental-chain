@@ -5,9 +5,9 @@ priority and components.
 
 ## ETH -> Jusion Portal (a.k.a Verifiable Oracle)
 
-- [ ] Definition of Transcript (based on the [ethers](https://docs.rs/ethers/latest/ethers/) library):
+- [X] Definition of Transcript (based on the [ethers](https://docs.rs/ethers/latest/ethers/) library):
   - [X] in Haskell,
-  - [ ] in Rust.
+  - [X] in Rust.
 - [ ] Encode Transcript into a vector of Field Elements
   - [ ] Fix Haskell implementation to use Montgomery representation for `Word64`
   <https://docs.rs/winter-math/latest/src/winter_math/field/f64/mod.rs.html#58>
