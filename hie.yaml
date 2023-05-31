@@ -14,3 +14,9 @@ cradle:
       config:
         cradle:
           cabal:
+            components:
+            - path: "./jusion-haskell/src"
+              component: "lib:jusion"
+            - path: "./jusion-haskell/tests/test.hs"
+              component: "test:jusion"
+              
