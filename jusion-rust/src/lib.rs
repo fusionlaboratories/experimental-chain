@@ -125,7 +125,7 @@ pub fn run_prover_files<P: AsRef<Path>> (t: Transcript, program_path: &P, hash_p
     fs::write(proof_path, proof.to_bytes()).unwrap();
 }
 
-pub fn run_verifier_files<P: AsRef<Path>> (t: Transcript, hash_path: &P, outputs_path: &P, proof_path: &P) -> Result<u32, VerificationError> {
+pub fn load_verifier_files<P: AsRef<Path>> (hash_path: &P, outputs_path: &P, proof_path: &P) -> (ProgramInfo, StackOutputs, ExecutionProof) {
     let hash_bytes = fs::read(hash_path).unwrap();
     let outputs_bytes = fs::read(outputs_path).unwrap();
     let proof_bytes = fs::read(proof_path).unwrap();
@@ -136,13 +136,16 @@ pub fn run_verifier_files<P: AsRef<Path>> (t: Transcript, hash_path: &P, outputs
     let proof = ExecutionProof::from_bytes(&proof_bytes).unwrap();
 
     let info = ProgramInfo::new(hash, Kernel::default());
-    return run_verifier(t, info, outputs, proof);
+    return (info, outputs, proof);
 }
 
 #[cfg(test)]
 mod tests {
+    use miden_core::FieldElement;
+    use tempfile::tempdir;
+
     use super::*;
-    use std::path::{Path, PathBuf};
+    use std::path::PathBuf;
 
     const T1: Transcript = Transcript {
         l1: 1,
@@ -154,24 +157,53 @@ mod tests {
         amount: 1,
     };
 
-    #[test]
-    fn elements() {
-        let bs = to_elements(T1);
-        assert_eq!(TRANSCRIPT_SIZE, bs.len());
-    }
+    fn setup_verifier_test() -> (Transcript, (ProgramInfo, StackOutputs, ExecutionProof)) {
+        let dir = tempdir().unwrap();
 
-
-    #[test]
-    fn roundtrip() {
-        let tmp = std::env::temp_dir();
-        let hash_path    = tmp.join("hash");
-        let outputs_path = tmp.join("outputs");
-        let proof_path   = tmp.join("proof");
-        println!("{:?}", tmp);
+        let hash_path    = dir.path().join("hash");
+        let outputs_path = dir.path().join("outputs");
+        let proof_path   = dir.path().join("proof");
+        println!("{:?}", dir);
 
         let input = PathBuf::new().join("../jusion-haskell/tests/test.masm");
         run_prover_files(T1, &input, &hash_path, &outputs_path, &proof_path);
-        run_verifier_files(T1, &hash_path, &outputs_path, &proof_path).unwrap();
+        return (T1, load_verifier_files(&hash_path, &outputs_path, &proof_path));
+    }
+
+    #[test]
+    fn roundtrip() -> () {
+        let (t, (info, outputs, proof)) = setup_verifier_test();
+        assert!(run_verifier(t, info, outputs, proof).is_ok());
+    }
+
+    #[test]
+    fn tamper_transcript() -> () {
+        todo!();
+    }
+
+    #[test]
+    fn tamper_hash() -> () {
+        let (t, (_, outputs, proof)) = setup_verifier_test();;
+        let one = BaseElement::ONE;
+        let d = Digest::new([one, one, one, one]);
+        let i = ProgramInfo::new(d, Kernel::default());
+        assert!(run_verifier(t, i, outputs, proof).is_err());
+    }
+
+    #[test]
+    fn tamper_outputs() -> () {
+        let (t, (info, mut outputs, proof)) = setup_verifier_test();
+        outputs.stack_mut()[0] += 1;
+        assert!(run_verifier(t, info, outputs, proof).is_err());
+    }
+
+    #[test]
+    fn tamper_proof() -> () {
+        let (t, (info, outputs, proof)) = setup_verifier_test();
+        let mut bs = proof.to_bytes();
+        bs[1] += 1;
+        let p = ExecutionProof::from_bytes(&bs).unwrap();
+        assert!(run_verifier(t, info, outputs, p).is_err());
     }
 
     #[test]
