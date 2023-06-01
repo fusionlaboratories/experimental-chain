@@ -6,6 +6,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-winter-math = "0.6.4"
+miden-assembly = "0.5.0"
+miden-core = "0.5.0"
+miden-prover = "0.5.0"
+miden-verifier = "0.5.0"
+miden-vm = "0.5.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+winter-math = "0.6.4"
+winter-utils = "0.6.4"
+
+[dev-dependencies]
+tempfile = "3"
