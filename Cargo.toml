@@ -1,4 +1,13 @@
 [workspace]
-members = ["jusion-rust"]
-default-members = ["jusion-rust"]
+members = [
+    "jusion-rust",
+    "jusion-substrate-node/node",
+    "jusion-substrate-node/pallets/template",
+    "jusion-substrate-node/runtime",
+]
+default-members = [
+    "jusion-rust"
+]
 
+[profile.release]
+panic = "unwind"
