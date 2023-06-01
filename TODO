@@ -12,7 +12,7 @@ priority and components.
   - [ ] Fix Haskell implementation to use Montgomery representation for `Word64`
   <https://docs.rs/winter-math/latest/src/winter_math/field/f64/mod.rs.html#58>
   <https://docs.rs/winter-math/latest/src/winter_math/field/f64/mod.rs.html#651>
-  - [ ] in Rust,
+  - [X] in Rust,
   - [ ] Compare Haskell and Rust implementation using property based testing.
 - [ ] Portal Transition Function
   - [X] Hand written MASM file without transaction semantics,
