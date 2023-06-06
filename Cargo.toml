@@ -1,4 +1,37 @@
 [workspace]
-members = ["jusion-rust"]
-default-members = ["jusion-rust"]
+members = [
+    "jusion-rust",
+    "miden-vm/air",
+    "miden-vm/assembly",
+    "miden-vm/core",
+    "miden-vm/miden",
+    "miden-vm/processor",
+    "miden-vm/prover",
+    "miden-vm/stdlib",
+    "miden-vm/verifier",
+]
+default-members = [
+    "jusion-rust",
+    "miden-vm/miden",
+]
 
+[patch.crates-io]
+miden-air = { path = "miden-vm/air" }
+miden-assembly  = { path = "miden-vm/assembly" }
+miden-core = { path = "miden-vm/core" }
+miden-vm = { path = "miden-vm/miden" }
+miden-processor = { path = "miden-vm/processor" }
+miden-prover = { path = "miden-vm/prover" }
+miden-stdlib = { path = "miden-vm/stdlib" }
+miden-verifier = { path = "miden-vm/verifier" }
+
+[profile.optimized]
+inherits = "release"
+codegen-units = 1
+lto = true
+
+[profile.test-release]
+inherits = "release"
+debug = true
+debug-assertions = true
+overflow-checks = true

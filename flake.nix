@@ -5,8 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     devenv.url = "github:cachix/devenv";
-    miden-vm.url = "github:qredek/miden-vm/add-exitcodes";
-    miden-vm.flake = false;
   };
 
   outputs = inputs@{ self, flake-parts, ... }:
@@ -33,20 +31,6 @@
         # Latest Rust toolchain
         packages.rust = pkgs.rust-bin.stable.latest.default;
 
-        # Miden VM
-        packages.miden = pkgs.rustPlatform.buildRustPackage {
-          pname = "miden-vm";
-          version = "0.5.0";
-          src = self.inputs.miden-vm;
-          buildType = "release";
-          buildFeatures = ["executable" "concurrent"];
-          nativeBuildInputs = [self'.packages.rust];
-          doCheck = false;
-          cargoLock = {
-            lockFile = "${self.inputs.miden-vm}/Cargo.lock";
-          };
-        };
-
         # Haskell Toolchain
         packages.ghc = pkgs.haskell.packages.ghc94.ghc;
         packages.haskell-language-server = pkgs.haskell.packages.ghc94.haskell-language-server;
@@ -56,9 +40,6 @@
 
           # https://devenv.sh/reference/options/
           packages = [
-            # Miden
-            self'.packages.miden
-
             # Haskell
             self'.packages.ghc
             self'.packages.haskell-language-server

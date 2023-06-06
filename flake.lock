@@ -125,23 +125,6 @@
         "type": "github"
       }
     },
-    "miden-vm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1683569868,
-        "narHash": "sha256-+VJlsDvHlMcCehlwT+B4FR/Y76dS3Vyyh0XUt/ijw8Y=",
-        "owner": "qredek",
-        "repo": "miden-vm",
-        "rev": "aaec8f40602a26bf936703075cffb22a482fd5b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "qredek",
-        "ref": "add-exitcodes",
-        "repo": "miden-vm",
-        "type": "github"
-      }
-    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
@@ -296,7 +279,6 @@
       "inputs": {
         "devenv": "devenv",
         "flake-parts": "flake-parts",
-        "miden-vm": "miden-vm",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay"
       }
