@@ -9,6 +9,9 @@ members = [
     "miden-vm/prover",
     "miden-vm/stdlib",
     "miden-vm/verifier",
+    "jusion-substrate-node/node",
+    "jusion-substrate-node/pallets/template",
+    "jusion-substrate-node/runtime",
 ]
 default-members = [
     "jusion-rust",
@@ -35,3 +38,7 @@ inherits = "release"
 debug = true
 debug-assertions = true
 overflow-checks = true
+
+[profile.release]
+panic = "unwind"
+
