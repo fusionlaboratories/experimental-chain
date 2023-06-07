@@ -57,7 +57,6 @@
 
           # Extra languages
           languages = {
-            javascript.enable = true;
           };
         };
       };
